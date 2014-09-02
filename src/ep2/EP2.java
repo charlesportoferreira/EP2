@@ -24,7 +24,7 @@ public class EP2 {
 
     public static void main(String[] args) {
         LerGrafoTXT leGrafo = new LerGrafoTXT();
-        Grafo grafo = leGrafo.LerArquivo("grafo2a.txt");
+        Grafo grafo = leGrafo.LerArquivo(args[0]);
         DFS(grafo, false);
         transpoeGrafo(grafo);
         grafo.getVertices().sort(new ComparatorVertice());
