@@ -25,42 +25,47 @@ public class EP2 {
     public static void main(String[] args) {
         LerGrafoTXT leGrafo = new LerGrafoTXT();
         Grafo grafo = leGrafo.LerArquivo("grafo2a.txt");
-        DFS(grafo);
+        DFS(grafo, false);
         transpoeGrafo(grafo);
         grafo.getVertices().sort(new ComparatorVertice());
         System.out.println();
         tempoAtual = 0;
-        DFS(grafo);
-        
+        System.out.println("Componentes Fortemente Conectados");
+        DFS(grafo, true);
+        System.out.println();
     }
 
-    public static void DFS(Grafo G) {
+    public static void DFS(Grafo G, boolean imprimeBusca) {
         for (Vertice vertice : G.getVertices()) {
             vertice.setCor("Branco");
         }
 
         for (Vertice vertice : G.getVertices()) {
             if (vertice.getCor().equals("Branco")) {
-                visitaDFS(G, vertice);
+                visitaDFS(G, vertice, imprimeBusca);
             }
         }
 
     }
 
-    private static void visitaDFS(Grafo G, Vertice vertice) {
+    private static void visitaDFS(Grafo G, Vertice vertice, boolean imprimeBusca) {
         tempoAtual += 1;
         vertice.setDistancia(tempoAtual);
-        System.out.printf(" ( " + vertice.getNome());
+        if (imprimeBusca) {
+            System.out.printf(" ( " + vertice.getNome());
+        }
         vertice.setCor("Cinza");
         for (Arco arco : vertice.getArcos()) {
             Vertice verticeAdjacente = arco.getVerticeDestino();
             if (verticeAdjacente.getCor().equals("Branco")) {
-                visitaDFS(G, verticeAdjacente);
+                visitaDFS(G, verticeAdjacente, imprimeBusca);
             }
         }
         tempoAtual += 1;
         vertice.setFinalizacao(tempoAtual);
-        System.out.printf(" " + vertice.getNome() + " )");
+        if (imprimeBusca) {
+            System.out.printf(" " + vertice.getNome() + " )");
+        }
         vertice.setCor("Preto");
     }
 
